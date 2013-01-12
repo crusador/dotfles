@@ -1,26 +1,34 @@
+set nocompatible
 call pathogen#infect()
 
 colorscheme jellybeans
 
 let g:EasyMotion_leader_key = '<Leader>'
+let g:sparkupNextMapping = '<c-y>'
 
 syntax enable
 filetype on
 " filetype indent on
 filetype plugin on
 
-set nocompatible
 set ttyfast
 set shell=bash
 set t_Co=256
 
+set noexpandtab " Make sure that every file uses real tabs, not spaces
+set shiftround  " Round indent to multiple of 'shiftwidth'
+set smartindent " Do smart indenting when starting a new line
 set autoindent
 set cindent
 set number
 set foldmethod=manual
-set shiftwidth=2
-set ts=2
+let s:tabwidth=2
+exec 'set tabstop='    .s:tabwidth
+exec 'set shiftwidth=' .s:tabwidth
+exec 'set softtabstop='.s:tabwidth
+set sw=2
 set softtabstop=2
+set ts=2
 set tw=80
 set wrap
 set cc=+1
@@ -61,7 +69,5 @@ hi ExtraWhitespace ctermbg=darkred guibg=red
 au BufWinEnter * let w:m2=matchadd('OverFlow', '\%>80v.\+', -1)
 au BufWinEnter * call matchadd('ExtraWhitespace', '\s\+$\| \+\ze\t', -1)
 au BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
-
-set sw=2
 
 silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
