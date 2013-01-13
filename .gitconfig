@@ -1,0 +1,22 @@
+[user]
+	name = Jitesh
+	email = msg.jitesh@gmail.com
+[color]
+	status = auto
+	branch = auto
+	interactive = auto
+	diff = auto
+[alias]
+	qlog = log --pretty='oneline'
+	s = status
+	l = log --pretty='oneline'
+
+[diff]
+	tool = vimdiff 
+
+[difftool]
+	prompt = false 
+
+[heroku]
+[heroku]
+	account = jak
