@@ -8,7 +8,7 @@ let g:sparkupNextMapping = '<c-y>'
 
 syntax enable
 filetype on
-" filetype indent on
+filetype indent on
 filetype plugin on
 
 set ttyfast
