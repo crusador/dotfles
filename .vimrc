@@ -8,6 +8,7 @@ let g:sparkupNextMapping = '<c-y>'
 
 syntax enable
 filetype on
+set cindent
 filetype indent on
 filetype plugin on
 
@@ -21,7 +22,8 @@ set smartindent " Do smart indenting when starting a new line
 set autoindent
 set cindent
 set number
-set foldmethod=manual
+set nofoldenable
+set foldmethod=syntax
 let s:tabwidth=2
 exec 'set tabstop='    .s:tabwidth
 exec 'set shiftwidth=' .s:tabwidth
@@ -54,8 +56,8 @@ map gN :NERDTree<CR>                    " Map gN for NERDTree
 map gr :vertical resize 
 map gn :set invnu<cr>                   " Map gn to toggle Numbers
 
-map zM :set mouse=a<cr>                 " Map zm to enable  mouse in console
-map zm :set mouse=c<cr>                 " Map zM to disable mouse in console
+map gM :set mouse=a<cr>                 " Map zm to enable  mouse in console
+map gm :set mouse=c<cr>                 " Map zM to disable mouse in console
 
 map ]] j0[[%/{<CR>                      " Map ]] to goto next {
 map [[ ?{<CR>w99[{
@@ -63,11 +65,13 @@ map ][ /}<CR>b99]}
 map [] k$][%?}<CR>                      " Map [] to matching previous }
 
 hi ColorColumn ctermbg=black guibg=black
-hi OverFlow ctermfg=209 guibg=#592929
+" hi OverFlow ctermfg=209 guibg=#592929
 hi ExtraWhitespace ctermbg=darkred guibg=red
 
-au BufWinEnter * let w:m2=matchadd('OverFlow', '\%>80v.\+', -1)
+" au BufWinEnter * let w:m2=matchadd('OverFlow', '\%>80v.\+', -1)
 au BufWinEnter * call matchadd('ExtraWhitespace', '\s\+$\| \+\ze\t', -1)
 au BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
 
-silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
+:au BufNewFile,BufRead *.html set ts=4
+:au BufNewFile,BufRead *.html set sw=4
+:au BufNewFile,BufRead *.html set cc=0
