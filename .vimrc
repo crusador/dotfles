@@ -16,6 +16,9 @@ set ttyfast
 set shell=bash
 set t_Co=256
 
+set wildmenu                      " Enhanced command line completion.
+set wildmode=list:longest         " Complete files like a shell.
+
 set noexpandtab " Make sure that every file uses real tabs, not spaces
 set shiftround  " Round indent to multiple of 'shiftwidth'
 set smartindent " Do smart indenting when starting a new line
