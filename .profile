@@ -21,7 +21,7 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-export PATH="/usr/local/texlive/bin/x86_64-linux:$PATH"
+export PATH="/home/jitesh/bin/texlive/bin/x86_64-linux:$PATH"
 export PATH="/home/jitesh/bin/jdk1.7.0_10/bin:$PATH"
 export CLASSPATH='.:/home/jitesh/.classes/*'
 
