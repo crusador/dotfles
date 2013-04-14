@@ -71,6 +71,7 @@ alias clipboard='xclip -selection "clipboard" -o'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....=' cd ../../..'
+alias xc='xclip -selection clipboard -i '
 
 # Typo aliases
 alias gut='git'
