@@ -3,7 +3,7 @@
 # fi
 PS1="\[\033]0;\W \007\]${debian_chroot:+($debian_chroot)}\\[\033[01;32m\]\[\033[01;34m\]\w \$ \[\033[00m\]" 
 
-function setTitle()      # Adds some text in the terminal frame.
+setTitle()      # Adds some text in the terminal frame.
 {
    case "$TERM" in
    *term | rxvt)
@@ -12,7 +12,7 @@ function setTitle()      # Adds some text in the terminal frame.
    esac
 }
 
-function extract()      # Handy Extract Program.
+extract()      # Handy Extract Program.
 {
    if [ -f $1 ] ; then
       case $1 in
@@ -35,24 +35,47 @@ function extract()      # Handy Extract Program.
 }
 
 # Browser specific functions to open in backgroud
-function gc() { command google-chrome "$@" 1>/dev/null 2>/dev/null & }
- function google-chrome() {
-		gc "$@"
- }
- function googlechrome() {
-		gc "$@"
- }
- function gci() {
-		gc "--incognito" "$@"
- }
+gc() {
+	command google-chrome "$@" 1>/dev/null 2>/dev/null &
+}
+google-chrome() {
+	gc "$@"
+}
+googlechrome() {
+	gc "$@"
+}
+gci() {
+	gc "--incognito" "$@"
+}
 
- function ff() { command firefox "$@" 1>/dev/null 2>/dev/null & }
- function firefox() {
-		ff "$@"
- }
- function ffi() {
-		ff "-private" "$@"
- }
+ff() { command firefox "$@" 1>/dev/null 2>/dev/null & }
+firefox() {
+	ff "$@"
+}
+ffi() {
+	ff "-private" "$@"
+}
+
+
+_boom_complete() {
+    local cur prev lists curr_list items
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    curr_list=`eval echo "$prev"`
+    local IFS=$'\n'
+
+    if [ $COMP_CWORD -eq 1 ]; then
+        lists=`boom | sed 's/^  \(.*\) ([0-9]\+)$/\1/'`
+        COMPREPLY=( $( compgen -W '${lists}' -- ${cur} ) )
+    elif [ $COMP_CWORD -eq 2 ]; then
+        items=`boom $curr_list | sed 's/^    \(.\{0,16\}\):.*$/\1/'`
+        COMPREPLY=( $( compgen -W '${items}' -- ${cur} ) )
+    fi
+}
+complete -o filenames -F _boom_complete boom
+
+
 
 alias reboot='sudo reboot'
 alias poweroff='sudo poweroff'
