@@ -22,8 +22,10 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 export PATH="/home/jitesh/bin/texlive/bin/x86_64-linux:$PATH"
+export PATH="/home/jitesh/github/fbCli/:$PATH"
 export PATH="/home/jitesh/bin/jdk1.7.0_10/bin:$PATH"
 export CLASSPATH='.:/home/jitesh/.classes/*'
 
 export EDITOR='/usr/bin/vim'
 export WWW='/var/www/'
+export NETWORK_PROFILES='/etc/NetworkManager/system-connections/'
