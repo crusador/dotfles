@@ -1,4 +1,6 @@
 var count=1;
+var rightColumn=null;
+
 function removeAds(){
 	console.log("Removing ads");
 	ads = document.getElementsByClassName('ego_column');
@@ -36,10 +38,10 @@ function editTitleBar(){
 }
 
 function main(){
+	rightColumn = document.getElementById('rightCol');
 	removeAds();
-	editTitleBar(); //Remove the Fixed Property of Upper Blue bar of Facebook.
-
-	document.addEventListener("DOMNodeInserted",removeAgain , false) //I have my eyes on you. If you DARE come back, I will KICK YOUR ASS again.
+	// editTitleBar(); //Remove the Fixed Property of Upper Blue bar of Facebook.
+	rightColumn.addEventListener("DOMNodeInserted",removeAgain , false) //I have my eyes on you. If you DARE come back, I will KICK YOUR ASS again.
 }
 
 main();

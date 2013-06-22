@@ -1,5 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_cnt =8
 let g:netrw_dirhist_1='/home/jitesh/.js/.git'
 let g:netrw_dirhist_2='/home/jitesh/.js'
 let g:netrw_dirhist_3='/home/jitesh/.startup'
@@ -7,3 +7,4 @@ let g:netrw_dirhist_4='/home/jitesh/bin/wo'
 let g:netrw_dirhist_5='/home/jitesh/.startup'
 let g:netrw_dirhist_6='/home/jitesh/.git'
 let g:netrw_dirhist_7='/home/jitesh/git Repos/fbCli'
+let g:netrw_dirhist_8='/home/jitesh/dotFiles/.themes/Eleganse.v2'

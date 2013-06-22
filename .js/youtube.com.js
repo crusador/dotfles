@@ -282,6 +282,7 @@ for (var i=0;i<downloadCodeList.length;i++) {
 	listSpan.setAttribute('loop', i+'');
 	listSpan.setAttribute('id', LISTITEM_ID+downloadCodeList[i].format);
 	listSpan.appendChild(document.createTextNode(downloadCodeList[i].label));
+	console.log(downloadCodeList[i].label + " : " + encodeURI(downloadCodeList[i].url));
 	listLink.appendChild(listSpan);
 	listItem.appendChild(listLink);
 	listItems.appendChild(listItem);    

@@ -41,13 +41,21 @@ set wrap
 set cc=+1
 set laststatus=2
 set statusline=%F%m%r%h%w\ {%Y}\ [%l,%v][%p%%]  "Modify the status line
+set incsearch
+set ignorecase
+set smartcase
+set hlsearch
+
+
+nmap j gj
+nmap k gk
 
 " Map \c for tcomment plugin.
 map <leader>c <c-_>
 map <leader>R :s/\s\+$//<cr>            " Map \R to remove trailing whitespace
 map <leader>r :vertical resize 85<CR>   " Map \r to resize to 85 cols.
 map <leader>v :so ~/.vimrc<CR>          " Map \v to redload .vimrc file.
-vmap <leader>C <esc>:'<,'>:w !xclip -selection clipboard -i <CR> <CR>
+vmap <leader>C <esc>:'<,'>:w !xclip -selection clipboard -i <CR>
 
 map <space>w <c-W>w
 map <space>W <c-W>W
