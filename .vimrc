@@ -21,6 +21,8 @@ set wildmode=list:longest         " Complete files like a shell.
 
 set noexpandtab " Make sure that every file uses real tabs, not spaces
 set shiftround  " Round indent to multiple of 'shiftwidth'
+set cul
+hi CursorLine term=none cterm=none ctermbg=0
 set smartindent " Do smart indenting when starting a new line
 set autoindent
 set cindent
@@ -45,6 +47,7 @@ map <leader>c <c-_>
 map <leader>R :s/\s\+$//<cr>            " Map \R to remove trailing whitespace
 map <leader>r :vertical resize 85<CR>   " Map \r to resize to 85 cols.
 map <leader>v :so ~/.vimrc<CR>          " Map \v to redload .vimrc file.
+vmap <leader>C <esc>:'<,'>:w !xclip -selection clipboard -i <CR> <CR>
 
 map <space>w <c-W>w
 map <space>W <c-W>W

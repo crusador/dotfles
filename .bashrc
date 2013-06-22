@@ -96,6 +96,7 @@ alias ...='cd ../..'
 alias ....=' cd ../../..'
 alias xc='xclip -selection clipboard -i '
 alias gmail='curl -u msg.jitesh --silent "https://mail.google.com/mail/feed/atom" | awk '"'"'BEGIN{FS="\n";RS="(</entry>\n)?<entry>"}NR!=1{print "\033[1;31m"$9"\033[0;32m ("$10")\033[0m:\t\033[1;33m"$2"\033[0m"}'"'"' | sed -e '"'"'s,<[^>]*>,,g'"'"' | column -t -s $'"'"'\t'"'"''
+alias ports='netstat -tlnp | column -t '
 
 # Typo aliases
 alias gut='git'
