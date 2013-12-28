@@ -1,24 +1,37 @@
 [user]
-	name = Jitesh
-	email = msg.jitesh@gmail.com
+    name = Jitesh
+    email = msg.jitesh@gmail.com
+
 [color]
-	status = auto
-	branch = auto
-	interactive = auto
-	diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+    diff = auto
+
 [alias]
-	qlog = log --pretty='oneline'
-	s = status
-	l = log --pretty='oneline'
+    bl = branch -l
+    st = status
+    s = status -sb
+    l = log --pretty=format:'%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]' --decorate --date=short
+    ll = log
+    dl = diff HEAD~1 HEAD
+    ds = diff --staged
+    co = checkout
+    cp = checkout -
+    cm = commit --amend
+    amend = commit --amend -C HEAD
+    rebaseFavorTheirs = rebase -s theirs
+    undo = reset --soft HEAD^
+    graph = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
 
 [diff]
-	tool = vimdiff 
+    tool = vimdiff 
 
 [difftool]
-	prompt = false 
+    prompt = false 
 
 [heroku]
-	account = jak
+    account = jak
 [github]
-	user = crusador
-	password = !reads | tr -d '\n'
+    user = crusador
+    password = !reads | tr -d '\n'

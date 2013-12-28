@@ -1,114 +1,87 @@
-# if [ -f /etc/bash_completion ]; then
-#   . /etc/bash_completion
-# fi
-PS1="\[\033]0;\W \007\]${debian_chroot:+($debian_chroot)}\\[\033[01;32m\]\[\033[01;34m\]\w \$ \[\033[00m\]" 
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
 
-setTitle()      # Adds some text in the terminal frame.
-{
-   case "$TERM" in
-   *term | rxvt)
-   echo -n -e "\033]0;$*\007" ;;
-   *)  ;;
-   esac
-}
+# don't put duplicate lines or lines starting with space in the history.
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color) color_prompt=yes;;
+esac
+
+force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+        color_prompt=yes
+    else
+        color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\w\[\033[00m\] \$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+    xterm*|rxvt*)
+        PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+        ;;
+    *)
+        ;;
+esac
 
 extract()      # Handy Extract Program.
 {
-   if [ -f $1 ] ; then
-      case $1 in
-	 *.tar.bz2)   tar xvjf $1     ;;
-	 *.tar.gz)    tar xvzf $1     ;;
-	 *.bz2)       bunzip2 $1 ;;
-	 *.rar) unrar x $1 ;;
-	 *.gz) gunzip $1 ;;
-	 *.tar) tar xvf $1 ;;
-	 *.tbz2) tar xvjf $1 ;;
-	 *.tgz) tar xvzf $1 ;;
-	 *.zip) unzip $1 ;;
-	 *.Z) uncompress $1 ;;
-	 *.7z) 7z x $1 ;;
-	 *) echo "'$1' cannot be extracted via >extract<" ;;
-      esac
-   else
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar xvjf $1     ;;
+            *.tar.gz)    tar xvzf $1     ;;
+            *.bz2)       bunzip2 $1 ;;
+            *.rar) unrar x $1 ;;
+                *.gz) gunzip $1 ;;
+            *.tar) tar xvf $1 ;;
+                *.tbz2) tar xvjf $1 ;;
+            *.tgz) tar xvzf $1 ;;
+                *.zip) unzip $1 ;;
+            *.Z) uncompress $1 ;;
+                *.7z) 7z x $1 ;;
+            *) echo "'$1' cannot be extracted via >extract<" ;;
+        esac
+  else
       echo "'$1' is not a valid file"
-   fi
+  fi
 }
 
-# Browser specific functions to open in backgroud
-gc() {
-	command google-chrome "$@" 1>/dev/null 2>/dev/null &
-}
-google-chrome() {
-	gc "$@"
-}
-googlechrome() {
-	gc "$@"
-}
-gci() {
-	gc "--incognito" "$@"
-}
+export TERM=xterm-256color
 
-ff() { command firefox "$@" 1>/dev/null 2>/dev/null & }
-firefox() {
-	ff "$@"
-}
-ffi() {
-	ff "-private" "$@"
-}
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
 
-
-_boom_complete() {
-    local cur prev lists curr_list items
-    COMPREPLY=()
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
-    curr_list=`eval echo "$prev"`
-    local IFS=$'\n'
-
-    if [ $COMP_CWORD -eq 1 ]; then
-        lists=`boom | sed 's/^  \(.*\) ([0-9]\+)$/\1/'`
-        COMPREPLY=( $( compgen -W '${lists}' -- ${cur} ) )
-    elif [ $COMP_CWORD -eq 2 ]; then
-        items=`boom $curr_list | sed 's/^    \(.\{0,16\}\):.*$/\1/'`
-        COMPREPLY=( $( compgen -W '${items}' -- ${cur} ) )
-    fi
-}
-complete -o filenames -F _boom_complete boom
-
-
-
-alias reboot='sudo reboot'
-alias poweroff='sudo poweroff'
-alias shutdown='sudo shutdown'
-alias bandkar='xset dpms force off'
-alias ls='ls -1 --color=auto'
-alias ll='ls -hlt --color=auto'
-alias la='ls -ahlt --color=auto'
-alias pdflatex='pdflatex --interaction batchmode'
-alias vim='setTitle Vim $PWD ; vim -p '
-alias vimo='setTitle Vim $PWD ; vim -O '
-alias more='less'
-alias wget='wget -c '
-alias echo='echo -e '
-alias clipboard='xclip -selection "clipboard" -o'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....=' cd ../../..'
-alias xc='xclip -selection clipboard -i '
-alias gmail='curl -u msg.jitesh --silent "https://mail.google.com/mail/feed/atom" | awk '"'"'BEGIN{FS="\n";RS="(</entry>\n)?<entry>"}NR!=1{print "\033[1;31m"$9"\033[0;32m ("$10")\033[0m:\t\033[1;33m"$2"\033[0m"}'"'"' | sed -e '"'"'s,<[^>]*>,,g'"'"' | column -t -s $'"'"'\t'"'"''
-alias ports='netstat -tlnp | column -t '
-alias xo='xdg-open '
-alias df='df -h '
-
-# Typo aliases
-alias gut='git'
-alias cd..='cd ..'
-
-# These are now declared in ~/.profile
-# export CLASSPATH='.:/home/jitesh/.classes/mysql-connector-java-5.0.7-bin.jar'
-# export EDITOR='/usr/bin/vim'
-# export CLASSPATH='.:/home/jitesh/.classes/*'
-# export WWW='/var/www/'
-# export PATH="/usr/local/texlive/bin/x86_64-linux:$PATH"
-
-# /usr/games/fortune -s | cowsay
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    . /etc/bash_completion
+fi
